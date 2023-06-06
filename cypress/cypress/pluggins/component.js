@@ -22,3 +22,4 @@ module.exports = (on, config) => {
   }
   import 'cypress-plugin-stripe-elements';
   import 'cypress/support/index.js';
+  import '../support/component.js'
