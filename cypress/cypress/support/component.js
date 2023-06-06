@@ -1,3 +1,8 @@
+
+import './commands'
+import 'cypress-plugin-stripe-elements';
+import './component.js';
+
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var getSelectorForField = function (name) {
@@ -30,5 +35,3 @@ Cypress.Commands.add('fillElementsInput', function (field, value) {
             .type(value);
     });
 });
-import 'cypress-plugin-stripe-elements';
-import 'cypress/support/index.js';

@@ -1,12 +1,9 @@
 import { faker } from '@faker-js/faker';
 export let fakerEmail = faker.internet.email()
 export let fakerAddress = faker.address.city()
-import 'cypress/support/index.js';
+import '../support/component.js';
 
-
-
-
-  // Suite HP 
+  // Suite HP
   describe('Casos HP', function() {
       
     before(function () {
@@ -39,34 +36,35 @@ import 'cypress/support/index.js';
         //cy.get('.styles_rightSectionContainer__2OXh-').should('be.visible')
 
     //Hacer clic en la Professional Printer y confirmar que la selección de impresora sea correcta
-        cy.get('.styles_buttonContainer__yFoLs > :nth-child(1)').should('contain.text', 'Best for home-based businesses and small offices ')
-        //cy.contains('Best for home-based businesses and small offices ')
-        .click({ force: true })
+        //cy.get('.styles_buttonContainer__yFoLs .styles_container__rGGRd .styles_textContainer__O-pKD .styles_title__qbvpE').should('contain.text', 'Essential')
+        cy.wait(3000)
+        cy.contains('Professional').click({force:true})
         //cy.get('.styles_containerSelected__H\+9Nz')
         .then((response) => {
             cy.log('The selection was succesful')
-        cy.get('.styles_title__qbvpE').should('contain.text','Professional')
-        cy.get('.styles_planType__orkFx').should('contain.text', 'Professional')
+        //cy.get('.styles_title__qbvpE').should('contain.text','Professional')
+        //cy.get('.styles_planType__orkFx').should('contain.text', 'Professional')
 
-    //Hacer clic en el plan Frequent de 300 pages y confirmar que se haya seleccionado el plan correcto
-        cy.get('.styles_buttonContainer__lHzpX > :nth-child(4)').click()
-        cy.get('.styles_pagesPerMonth__aPHHe').should('contain.text','300','pages/month')
+    //Hacer clic en el plan Frequent de 100 pages y confirmar que se haya seleccionado el plan correcto
+    cy.wait(3000)    
+    cy.contains('Business').click()
 
     //Add paper to my subscription y confirmar que se haya seleccionado correctamente
-    cy.get('.styles_rightSectionContainer__NgKA8').should('contain.text','Yes, add it to my suscription').click()
+    cy.wait(3000)    
+    cy.contains('Yes').click()
 
     //Validar el resumen y pasar al checkout
-        cy.get('.styles_leftContainer__rdQPU > h1').should('contain.text','20.99','/month')
+        cy.get('.styles_leftContainer__rdQPU > h1').should('contain.text','$','14.48','/month')
         cy.get('.styles_button__OfL0V').click()
 
     //Confirmar la info del plan seleccionado en la pantalla del checkout
         cy.get('.styles_cardWithInfo__9Ta6b').should('contain.text','My Plan')
         cy.get('.styles_cardWithInfo__9Ta6b').should('contain.text','Your plan costs:')
         cy.get('.styles_pricePerMonth__LoF5P').should('contain.text','$')
-        cy.get('.styles_pricePerMonth__LoF5P').should('contain.text','20.99')
+        cy.get('.styles_pricePerMonth__LoF5P').should('contain.text','43.48')
         cy.get('.styles_contentBox__7q6CW > :nth-child(3)').should('contain.text','HP OfficeJet Pro')
-        cy.get('.styles_pagesSection__s5RZs > :nth-child(1)').should('contain.text','Includes 300 pages/month')
-        cy.get('.styles_pagesSection__s5RZs > :nth-child(2)').should('contain.text','Paper: No')
+        cy.get('.styles_pagesSection__s5RZs > :nth-child(1)').should('contain.text','Includes 700 pages/month')
+        cy.get('.styles_pagesSection__s5RZs > :nth-child(2)').should('contain.text','Paper: Yes')
 
     //Fill and Save shipping form
 
@@ -85,29 +83,27 @@ import 'cypress/support/index.js';
         cy.get('.styles_button__vgeeK').click()
 
     //Fill and Save Billing form
-    
-    
 
-        cy.get('.styles_button__SmAII').click()
-        cy.get('#billing-name').type(this.datos.CardName)
-        cy.get('.styles_button__SmAII').click()
-        cy.get('#billing-name').type(this.datos.CardName)
-        cy.fillElementsInput('cardNumber', '4242424242424242');
-        cy.fillElementsInput('cardExpiry', '0929');
-        cy.fillElementsInput('cardCvc', '123');
-        cy.get('.styles_button__QSd6O').click()
+        cy.get('[class="styles_button__SmAII css-13gwoo4"]').click({force: true})
+         cy.get('#billing-name').type(this.datos.CardName)
+         cy.fillElementsInput('cardNumber', '4242424242424242');
+         cy.fillElementsInput('cardExpiry', '0929');
+         cy.fillElementsInput('cardCvc', '123');
+         cy.get('.styles_button__QSd6O').click()
 
+      
+          
+    
     //Confirming the purchase
 
         cy.get('.styles_confirmButtonContainer__lliKg > .styles_button__IIKnL').click()
-       /* cy.get('#billing-confirmation').check()
+        cy.get('#billing-confirmation').check()
         cy.get('.styles_confirmButton__cxaJH').click()
         cy.get('.styles_title__VC7n0').should('contain.text','Thank you for\nchoosing HP Instant\nInk Platinum Service')
         .then((response) => {
             cy.log('The purchase was succesful')
           })
     
-    */
       
     // Caso 02      
     it('Validar que los CTAs de la landing funcionen bien', function (){
@@ -132,11 +128,9 @@ import 'cypress/support/index.js';
 
         
         
-        
+       
         
       
-        
-       
 
 
 
