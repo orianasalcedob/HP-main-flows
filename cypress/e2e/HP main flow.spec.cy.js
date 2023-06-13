@@ -7,6 +7,8 @@ import '../support/component.js';
   describe('Casos HP', function() {
       
     before(function () {
+
+    
         //Cargamos los valores del archivo example.json en un objeto de datos
         cy.fixture('Data Shipping and Billing').then(function (datos) {
             this.datos = datos
@@ -15,7 +17,7 @@ import '../support/component.js';
 
     beforeEach(() => {
         //Ingresamos a la landing page
-    cy.visit('https://qa.platinum-ink.com/?utm_campaign=AC', {
+    cy.visit('https://instant-ink-platinum-dev.tropos-rnd.com/?oobe=false', {
     failOnStatusCode: false,
             auth: {
               username:'hp',
@@ -29,42 +31,46 @@ import '../support/component.js';
     it('Ejecución de fujo E2E', function (){
         fakerEmail =  faker.internet.email()
         fakerAddress =  faker.address.city()
-        cy.get('.styles_button__AVQaf').click()
 
+    //Una vez en la landing page acepta las cookies y hace click en CTA para ir a la selection page
 
-    // Encontrar la seccion de choose your printer
-        //cy.get('.styles_rightSectionContainer__2OXh-').should('be.visible')
+        cy.wait(3000)
+        cy.get('#onetrust-accept-btn-handler').click()
+        cy.get('.styles_bottomSection__HDlHy > .styles_containerPrimary__m9rxi').click()
+
 
     //Hacer clic en la Professional Printer y confirmar que la selección de impresora sea correcta
-        //cy.get('.styles_buttonContainer__yFoLs .styles_container__rGGRd .styles_textContainer__O-pKD .styles_title__qbvpE').should('contain.text', 'Essential')
+     
         cy.wait(3000)
         cy.contains('Professional').click({force:true})
-        //cy.get('.styles_containerSelected__H\+9Nz')
         .then((response) => {
             cy.log('The selection was succesful')
-        //cy.get('.styles_title__qbvpE').should('contain.text','Professional')
-        //cy.get('.styles_planType__orkFx').should('contain.text', 'Professional')
+       
 
-    //Hacer clic en el plan Frequent de 100 pages y confirmar que se haya seleccionado el plan correcto
-    cy.wait(3000)    
-    cy.contains('Business').click()
+    //Hacer clic en el plan Business de 700 pages y confirmar que se haya seleccionado el plan correcto
+
+        cy.wait(3000)    
+        cy.contains('Business').click()
 
     //Add paper to my subscription y confirmar que se haya seleccionado correctamente
-    cy.wait(3000)    
-    cy.contains('Yes').click()
+
+        cy.wait(3000)    
+        cy.contains('Yes').click()
 
     //Validar el resumen y pasar al checkout
-        cy.get('.styles_leftContainer__rdQPU > h1').should('contain.text','$','14.48','/month')
+
+        cy.get('.styles_leftContainer__rdQPU > h1').should('contain.text','$','43.48','/month')
         cy.get('.styles_button__OfL0V').click()
 
     //Confirmar la info del plan seleccionado en la pantalla del checkout
-        cy.get('.styles_cardWithInfo__9Ta6b').should('contain.text','My Plan')
-        cy.get('.styles_cardWithInfo__9Ta6b').should('contain.text','Your plan costs:')
-        cy.get('.styles_pricePerMonth__LoF5P').should('contain.text','$')
-        cy.get('.styles_pricePerMonth__LoF5P').should('contain.text','43.48')
-        cy.get('.styles_contentBox__7q6CW > :nth-child(3)').should('contain.text','HP OfficeJet Pro')
-        cy.get('.styles_pagesSection__s5RZs > :nth-child(1)').should('contain.text','Includes 700 pages/month')
-        cy.get('.styles_pagesSection__s5RZs > :nth-child(2)').should('contain.text','Paper: Yes')
+
+        cy.contains('My Plan')
+        cy.contains('Your plan costs:')
+        cy.contains('43.48')
+        cy.contains('HP OfficeJet Pro')
+        cy.contains('Includes 700 pages/month')
+        cy.contains('Paper: Yes')
+        
 
     //Fill and Save shipping form
 
@@ -80,25 +86,26 @@ import '../support/component.js';
         cy.get('.css-yfhigx').click()
         cy.get('#shipping-state-option-3').click()
         cy.get('#shipping-zip').type(this.datos.Zip)
-        cy.get('.styles_button__vgeeK').click()
+        cy.get('.styles_containerPrimary__m9rxi').click()
 
     //Fill and Save Billing form
 
         cy.get('[class="styles_button__SmAII css-13gwoo4"]').click({force: true})
-         cy.get('#billing-name').type(this.datos.CardName)
-         cy.fillElementsInput('cardNumber', '4242424242424242');
-         cy.fillElementsInput('cardExpiry', '0929');
-         cy.fillElementsInput('cardCvc', '123');
-         cy.get('.styles_button__QSd6O').click()
+        cy.get('#billing-name').type(this.datos.CardName)
+        cy.fillElementsInput('cardNumber', '4242424242424242');
+        cy.fillElementsInput('cardExpiry', '0929');
+        cy.fillElementsInput('cardCvc', '123');
+        cy.get('.styles_containerPrimary__m9rxi').click()
 
       
           
     
     //Confirming the purchase
 
-        cy.get('.styles_confirmButtonContainer__lliKg > .styles_button__IIKnL').click()
+        cy.get('.css-13gwoo4').click()
         cy.get('#billing-confirmation').check()
-        cy.get('.styles_confirmButton__cxaJH').click()
+        cy.get('.styles_button__fLqYE').click()
+        cy.wait(4000)
         cy.get('.styles_title__VC7n0').should('contain.text','Thank you for\nchoosing HP Instant\nInk Platinum Service')
         .then((response) => {
             cy.log('The purchase was succesful')
