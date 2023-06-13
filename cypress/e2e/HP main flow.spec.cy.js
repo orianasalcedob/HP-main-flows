@@ -3,8 +3,10 @@ export let fakerEmail = faker.internet.email()
 export let fakerAddress = faker.address.city()
 import '../support/component.js';
 
+
   // Suite HP
   describe('Casos HP', function() {
+    
       
     before(function () {
 
@@ -17,20 +19,25 @@ import '../support/component.js';
 
     beforeEach(() => {
         //Ingresamos a la landing page
+       
     cy.visit('https://instant-ink-platinum-dev.tropos-rnd.com/?oobe=false', {
     failOnStatusCode: false,
             auth: {
               username:'hp',
               password:'NewPrinter',
+
+    
             }
         })
     })
-
+    
     
     //Caso 01 flujo E2E
     it('Ejecución de fujo E2E', function (){
         fakerEmail =  faker.internet.email()
         fakerAddress =  faker.address.city()
+    
+      
 
     //Una vez en la landing page acepta las cookies y hace click en CTA para ir a la selection page
 
