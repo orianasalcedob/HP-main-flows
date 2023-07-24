@@ -20,7 +20,7 @@ import '../support/component.js';
     beforeEach(() => {
         //Ingresamos a la landing page
        
-    cy.visit('https://instant-ink-platinum-dev.tropos-rnd.com/es', {
+    cy.visit('https://instant-ink-platinum-dev.tropos-rnd.com/?useNewCheckout=true', {
     failOnStatusCode: false,
             auth: {
               username:'hp',
@@ -49,7 +49,7 @@ import '../support/component.js';
     //Hacer clic en la Professional Printer y confirmar que la selección de impresora sea correcta
      
         cy.wait(3000)
-        cy.contains('Profesional').click({force:true})
+        cy.contains('Professional').click({force:true})
         .then((response) => {
             cy.log('The selection was succesful')
        
@@ -57,26 +57,26 @@ import '../support/component.js';
     //Hacer clic en el plan Business de 700 pages y confirmar que se haya seleccionado el plan correcto
 
         cy.wait(3000)    
-        cy.contains('Negocios').click()
+        cy.contains('Business').click()
 
     //Add paper to my subscription y confirmar que se haya seleccionado correctamente
 
-      //  cy.wait(3000)    
-      //  cy.contains('Yes').click()
+        cy.wait(3000)    
+        cy.contains('Yes').click()
 
     //Validar el resumen y pasar al checkout
 
-        cy.get('.styles_leftContainer__rdQPU > h1').should('contain.text','$','33.99','/mes')
-        cy.get('.styles_containerPrimary__m9rxi').click()
+        cy.get('.styles_leftContainer__rdQPU > h1').should('contain.text','$','43.48','/month')
+        cy.get('.styles_button__OfL0V').click()
 
     //Confirmar la info del plan seleccionado en la pantalla del checkout
 
-        cy.contains('Mi Plan')
-        cy.contains('El costo de tu plan:')
-        cy.contains('33,99')
+        cy.contains('My Plan')
+        cy.contains('Your plan costs:')
+        cy.contains('43.48')
         cy.contains('HP OfficeJet Pro')
-        cy.contains('Incluye 700 páginas/mes')
-        //cy.contains('Paper: Yes')
+        cy.contains('Includes 700 pages/month')
+        cy.contains('Paper: Yes')
         
 
     //Fill and Save shipping form
